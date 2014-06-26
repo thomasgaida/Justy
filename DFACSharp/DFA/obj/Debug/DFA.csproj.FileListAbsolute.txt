@@ -1,0 +1,6 @@
+D:\Workspaces\C#\Abstrakte Maschinen\DFA\DFA\bin\Debug\DFA.exe.config
+D:\Workspaces\C#\Abstrakte Maschinen\DFA\DFA\bin\Debug\DFA.exe
+D:\Workspaces\C#\Abstrakte Maschinen\DFA\DFA\bin\Debug\DFA.pdb
+D:\Workspaces\C#\Abstrakte Maschinen\DFA\DFA\obj\Debug\DFA.csprojResolveAssemblyReference.cache
+D:\Workspaces\C#\Abstrakte Maschinen\DFA\DFA\obj\Debug\DFA.exe
+D:\Workspaces\C#\Abstrakte Maschinen\DFA\DFA\obj\Debug\DFA.pdb

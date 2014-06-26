@@ -1,0 +1,137 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
+ */options{  JDK_VERSION = "1.5";  static = true;}PARSER_BEGIN(EG1)package at.fhv.arithmetik;
+import java.io.*;
+import fhv.symbol.*;
+
+
+public class EG1{
+   public static SymbolTable table=new SymbolTable();
+      public static void main(String args []) throws ParseException  {
+
+        try
+    {
+      EG1 parser = new EG1(new FileInputStream("Input/intput.txt"));
+      parser.file();
+     table.checkIfAllVariablesBeenUsed();
+      System.out.println("OK.");
+    }
+    catch (ParseException e)
+    {
+      System.out.println("NOK.");
+      System.out.println(e.getMessage());
+    }
+    catch (Error e)
+    {
+      System.out.println("Oops.");
+      System.out.println(e.getMessage());
+      e.printStackTrace();
+    }
+    catch (Exception e)
+    {
+      System.out.println("Other oops.");
+      System.out.println(e.getMessage());
+      e.printStackTrace();
+    }  }}PARSER_END(EG1)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : /* OPERATORS */{  < PLUS : "+" >| < MINUS : "-" >| < MULTIPLY : "*" >| < DIVIDE : "/" >}TOKEN :{
+  < NUMBER : (< DIGIT >)+ >
+| < #DIGIT : [ "0"-"9" ] >
+| < Var : [ "a"-"z" ] >}
+
+void file() :
+{
+double result;
+}
+{
+  {    
+  result=evaluation();
+  System.out.println(result);
+}
+  
+}
+
+double evaluation():
+{
+  Token token;
+  Token token2;
+  double result=0;}
+{
+  (    
+    LOOKAHEAD(2)   token=<Var> "=" token2=< NUMBER >";"
+   {
+     table.addVar(token.image,Integer.parseInt(token2.image));   }
+	)*	  
+  result=expr()
+  {
+    return result;  }
+}
+
+double expr():
+{
+  double result=0;
+  double termres=0;}
+{
+  
+  result=term()
+  
+  (
+    "+" 	termres=term()
+ 	{ 	  
+    result=result+termres;
+  }
+  | "-"
+  	termres=term()
+  {    
+  result=result-termres;
+}
+)*
+{
+  return result;
+}}
+
+
+
+double term():
+{
+  double result=0;
+  double factorres=0;
+}
+{
+
+ result=factor()
+
+  (    
+    "*"
+    factorres=factor()
+    {      
+    result=result*factorres;
+  }
+  | "/"
+   factorres=factor()
+  {    
+  result=result/factorres;
+}
+)*
+{
+  return result;}
+  
+}
+
+double factor():
+{
+  double result;
+}
+{
+ token= < NUMBER >
+ {
+   return Double.parseDouble(token.image); }
+| token=< Var >
+{
+  return table.lookUp(token.image);}
+|"("result=expr()")"
+{
+  return result;}
+}
+
+
+
+
